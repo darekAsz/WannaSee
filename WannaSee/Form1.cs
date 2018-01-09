@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,18 @@ namespace WannaSee
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void changeUser_Click(object sender, EventArgs e)
+        {
+            new UserPanel().Show();
+        }
+
+        private void ListOfFilms_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new Movies(this).Show();
+            
         }
     }
 }
