@@ -17,19 +17,33 @@ namespace WannaSee
     {
         public readonly Form1 MainWindow;
         public string Url;
-        public List<String> MoviesList = new List<string>();
+        public List<Movie> MoviesList = new List<Movie>();
 
 
         public Movies(Form1 form1)
-        {   
+        {
             MainWindow = form1;
             Url = GetUrl();
-            //MoviesList = GetMoviesList();
+            MoviesList = GetMoviesList();
             InitializeComponent();
+            MainWindow.Hide();
+            AddToGrid();
+
+            DataMovies.ColumnHeadersDefaultCellStyle.BackColor = Color.CadetBlue;
+            DataMovies.EnableHeadersVisualStyles = false;
         }
 
-        private void GetMoviesList()
+
+        private string GetUrl()
         {
+            return File.ReadAllText("user.txt");
+        }
+
+        private List<Movie> GetMoviesList()
+        {
+            var listOfMovies = new List<Movie>();
+
+            int count = 0;
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -38,8 +52,50 @@ namespace WannaSee
                     .SelectSingleNode("//div[@class='bodyBackground']")
                     .SelectSingleNode("//div[@class='bodyWrapper ']");
                 var moviesInfo = mainNode.SelectNodes("//div/table[@class='sortable wantToSeeSee']/tbody/td");
-                int i = 9;
+
+                var movie = new Movie();
+                foreach (var singleMovie in moviesInfo)
+                {
+                    if (count % 2 == 0) // title
+                    {
+                        movie = new Movie();
+                        var row = singleMovie.InnerText;
+                        //movie.Tittle = row.Substring(0, row.LastIndexOf('('));
+                        movie.Tittle = singleMovie.Attributes[0].DeEntitizeValue;
+
+                        movie.Year = row.Substring(singleMovie.InnerText.LastIndexOf('(') + 1, 4);
+                        movie.Genre = row.Substring(row.LastIndexOf("gatunek:") + 8);
+
+                        try
+                        {
+                            movie.EnglishTittle = row.Substring(row.LastIndexOf(')') + 1,
+                                row.LastIndexOf(" kraj:") - row.LastIndexOf(')'));
+                        }
+                        catch (Exception e)
+                        {
+                            movie.EnglishTittle = "";
+                        }
+
+                        try
+                        {
+                            movie.Country = row.Substring(row.LastIndexOf("kraj:") + 5,
+                                row.LastIndexOf(" gatunek:") - row.LastIndexOf("kraj") - 5);
+                        }
+                        catch (Exception e)
+                        {
+                            movie.Country = "";
+                        }
+                    }
+
+                    else // how much want to see
+                    {
+                        movie.HowMuchWantSee = singleMovie.LastChild.InnerText;
+                        listOfMovies.Add(movie);
+                    }
+                    count++;
+                }
             }
+
             catch (Exception e)
             {
                 MessageBox.Show("Błąd odczytu. Sprawdź połączenie internetowe lub czy wprowadzona " +
@@ -47,16 +103,17 @@ namespace WannaSee
                     MessageBoxIcon.Error);
             }
 
+            return listOfMovies;
         }
 
-        private string GetUrl()
+
+        private void AddToGrid()
         {
-            return File.ReadAllText("user.txt");
+            foreach (var movie in MoviesList)
+            {
+                this.DataMovies.Rows.Add(movie.Tittle, movie.EnglishTittle, movie.Genre, movie.Year, movie.Country, movie.HowMuchWantSee);
+            }
         }
-
-
-
-
 
         private void BackToMenu_Click(object sender, EventArgs e)
         {
@@ -64,17 +121,12 @@ namespace WannaSee
             MainWindow.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            GetMoviesList();
-        }
+ 
 
         private void Movies_FormClosing(object sender, FormClosingEventArgs e)
-        {      
-            this.DestroyHandle(); 
+        {
+            this.DestroyHandle();
             MainWindow.Show();
         }
-
-        
     }
 }

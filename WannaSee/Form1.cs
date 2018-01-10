@@ -25,9 +25,7 @@ namespace WannaSee
 
         private void ListOfFilms_Click(object sender, EventArgs e)
         {
-            this.Hide();
             new Movies(this).Show();
-            
         }
     }
 }
