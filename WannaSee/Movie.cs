@@ -14,5 +14,6 @@ namespace WannaSee
         public string HowMuchWantSee { get; set; } 
         public string Year { get; set; } 
         public string Country { get; set; }
+        public string Rate { get; set; }
     }
 }

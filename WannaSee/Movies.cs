@@ -28,6 +28,7 @@ namespace WannaSee
             InitializeComponent();
             MainWindow.Hide();
             AddToGrid();
+            ChangeBackgroundColor();
 
             DataMovies.ColumnHeadersDefaultCellStyle.BackColor = Color.CadetBlue;
             DataMovies.EnableHeadersVisualStyles = false;
@@ -60,7 +61,6 @@ namespace WannaSee
                     {
                         movie = new Movie();
                         var row = singleMovie.InnerText;
-                        //movie.Tittle = row.Substring(0, row.LastIndexOf('('));
                         movie.Tittle = singleMovie.Attributes[0].DeEntitizeValue;
 
                         movie.Year = row.Substring(singleMovie.InnerText.LastIndexOf('(') + 1, 4);
@@ -85,6 +85,20 @@ namespace WannaSee
                         {
                             movie.Country = "";
                         }
+
+                        if(count < 200)
+                            try
+                        {
+                            var htmlMovie = singleMovie.InnerHtml;
+                            var movieUrl = htmlMovie.Substring(htmlMovie.IndexOf("href=\"") + 6,
+                                htmlMovie.IndexOf("class") - htmlMovie.IndexOf("href=\"") - 8);
+                            movieUrl = "http://www.filmweb.pl" + movieUrl;
+                            movie.Rate = GetRateOfMovie(movieUrl);
+                        }
+                        catch (Exception e)
+                        {
+                            movie.Rate = "";
+                        }
                     }
 
                     else // how much want to see
@@ -106,14 +120,37 @@ namespace WannaSee
             return listOfMovies;
         }
 
+        private string GetRateOfMovie(string movieUrl)
+        {
+            HtmlWeb web = new HtmlWeb();
+            var htmlDoc = web.Load(movieUrl);
+            var mainNode = htmlDoc.DocumentNode
+                .SelectSingleNode("//body/div[@class='entity-page-wrapper']/div[@id='body']")
+                .SelectSingleNode("//div[@class='bodyBackground']")
+                .SelectSingleNode("//div[@class='bodyWrapper ']/div[@id='sidebar']")
+                .SelectSingleNode("//div[@class='filmRateBox']").ChildNodes[6];
+            var textNode = mainNode.InnerText;
+            return textNode.Substring(textNode.IndexOf("communityRateInfo:") + 19, 3);
+        }
+
 
         private void AddToGrid()
         {
             foreach (var movie in MoviesList)
             {
-                this.DataMovies.Rows.Add(movie.Tittle, movie.EnglishTittle, movie.Genre, movie.Year, movie.Country, movie.HowMuchWantSee);
+                this.DataMovies.Rows.Add(movie.Tittle, movie.EnglishTittle,movie.Rate,
+                    movie.Genre, movie.Year, movie.Country, movie.HowMuchWantSee);
             }
         }
+
+
+        private void ChangeBackgroundColor()
+        {
+            foreach (DataGridViewRow row in DataMovies.Rows)
+                row.DefaultCellStyle.BackColor = Color.Bisque;
+        }
+
+
 
         private void BackToMenu_Click(object sender, EventArgs e)
         {

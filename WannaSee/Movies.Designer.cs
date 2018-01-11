@@ -32,6 +32,7 @@
             this.DataMovies = new System.Windows.Forms.DataGridView();
             this.Tittle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EnglishTittle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Genre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Year = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Country = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,14 +57,15 @@
             this.DataMovies.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Tittle,
             this.EnglishTittle,
+            this.Rate,
             this.Genre,
             this.Year,
             this.Country,
             this.HowMuchWantSee});
             this.DataMovies.EnableHeadersVisualStyles = false;
-            this.DataMovies.Location = new System.Drawing.Point(12, 12);
+            this.DataMovies.Location = new System.Drawing.Point(3, 12);
             this.DataMovies.Name = "DataMovies";
-            this.DataMovies.Size = new System.Drawing.Size(853, 376);
+            this.DataMovies.Size = new System.Drawing.Size(862, 376);
             this.DataMovies.TabIndex = 1;
             // 
             // Tittle
@@ -79,6 +81,13 @@
             this.EnglishTittle.Name = "EnglishTittle";
             this.EnglishTittle.ReadOnly = true;
             this.EnglishTittle.Width = 150;
+            // 
+            // Rate
+            // 
+            this.Rate.HeaderText = "Ocena";
+            this.Rate.Name = "Rate";
+            this.Rate.ReadOnly = true;
+            this.Rate.Width = 50;
             // 
             // Genre
             // 
@@ -129,6 +138,7 @@
         private System.Windows.Forms.DataGridView DataMovies;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tittle;
         private System.Windows.Forms.DataGridViewTextBoxColumn EnglishTittle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Genre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Year;
         private System.Windows.Forms.DataGridViewTextBoxColumn Country;
