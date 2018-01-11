@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ChangeUser = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ListOfFilms = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.loadRates = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // ChangeUser
@@ -83,12 +87,36 @@
             this.ListOfFilms.UseVisualStyleBackColor = false;
             this.ListOfFilms.Click += new System.EventHandler(this.ListOfFilms_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(86, 338);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(152, 25);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Wczytaj oceny";
+            // 
+            // loadRates
+            // 
+            this.loadRates.AutoSize = true;
+            this.loadRates.Location = new System.Drawing.Point(257, 345);
+            this.loadRates.Name = "loadRates";
+            this.loadRates.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.loadRates.Size = new System.Drawing.Size(15, 14);
+            this.loadRates.TabIndex = 5;
+            this.toolTip1.SetToolTip(this.loadRates, "Zaznaczenie tej opcji spowoduje wczytanie informacji o aktualnych\r\nocenach danych" +
+        " filmów. Uwaga: wczytanie danych może zająć dużo \r\nczasu");
+            this.loadRates.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(611, 411);
+            this.Controls.Add(this.loadRates);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.ListOfFilms);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -107,6 +135,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ListOfFilms;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox loadRates;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

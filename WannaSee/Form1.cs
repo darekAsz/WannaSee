@@ -18,6 +18,13 @@ namespace WannaSee
             InitializeComponent();
         }
 
+        public bool LoadRates()
+        {
+            if (loadRates.Checked)
+                return true;
+            else return false;
+        }
+
         private void changeUser_Click(object sender, EventArgs e)
         {
             new UserPanel().Show();
