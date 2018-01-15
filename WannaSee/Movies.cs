@@ -112,7 +112,15 @@ namespace WannaSee
 
         private string GetUrl()
         {
-            return File.ReadAllText("user.txt");
+            try
+            {
+                return File.ReadAllText("user.txt");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Problem przy operacji na pliku. Plik uszkodzony lub nie masz praw dostepu.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "";
+            }
         }
 
         private List<Movie> GetMoviesList()

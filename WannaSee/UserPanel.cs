@@ -38,7 +38,7 @@ namespace WannaSee
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show("Problem przy operacji na pliku", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Problem przy operacji na pliku. Plik uszkodzony lub nie masz praw dostepu.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
