@@ -145,7 +145,7 @@ namespace WannaSee
                         var row = singleMovie.InnerText;
                         movie.Tittle = singleMovie.Attributes[0].DeEntitizeValue;
 
-                        movie.Year = row.Substring(singleMovie.InnerText.LastIndexOf('(') + 1, 4);
+                        movie.Year = row.Substring(singleMovie.InnerText.IndexOf('(') + 1, 4);
 
                         //add Genre (to list)
                         movie.Genre = row.Substring(row.LastIndexOf("gatunek:") + 8);
@@ -369,13 +369,13 @@ namespace WannaSee
             {
                 if (filtr.SinceRate != "")
                 {
-                    List<Movie> rateSinceFiltr = MoviesList.Where(q => float.Parse(q.Rate) >= float.Parse(filtr.SinceRate))
+                    List<Movie> rateSinceFiltr = MoviesList.Where(q => q.Rate != "" && ((float.Parse(q.Rate) >= float.Parse(filtr.SinceRate))))
                         .ToList();
                     actualList = actualList.Intersect(rateSinceFiltr).ToList();
                 }
                 if (filtr.ToRate != "")
                 {
-                    List<Movie> rateToFiltr = MoviesList.Where(q => float.Parse(q.Rate) <= float.Parse(filtr.ToRate)).ToList();
+                    List<Movie> rateToFiltr = MoviesList.Where(q => q.Rate != "" && (float.Parse(q.Rate) <= float.Parse(filtr.ToRate))).ToList();
                     actualList = actualList.Intersect(rateToFiltr).ToList();
                 }
             }
