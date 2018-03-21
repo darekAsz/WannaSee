@@ -286,10 +286,11 @@ namespace WannaSee
 
         private void GiveRandomMovie_Click(object sender, EventArgs e)
         {
-            var length = MoviesList.Count;
+            if (actualList.Count == 0) actualList = MoviesList;
+            var length = actualList.Count;
             Random rnd = new Random();
-            var index = rnd.Next(length) - 1;
-            var movie = MoviesList[index];
+            var index = rnd.Next(length);
+            var movie = actualList[index];
             SetGridValues(movie);
             ClearSelection();
         }
