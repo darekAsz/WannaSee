@@ -31,7 +31,7 @@ namespace WannaSee
                 {    var sb = new StringBuilder();
                     sb.Append("http://www.filmweb.pl/user/");
                     sb.Append(userName.Text);
-                    sb.Append("/films/wanna-see");
+                    sb.Append("/films/wantToSee");
                      File.WriteAllText("user.txt", sb.ToString());
                     MessageBox.Show("Poprawnie zmieniono użytkownika", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DestroyHandle();
